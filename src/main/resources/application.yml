@@ -1,0 +1,9 @@
+server:
+  port:
+
+auth:
+  readTimeOut: 60
+  host: 127.0.0.1
+  port: 9960
+  bossCount: 1
+  workerCount: 2
