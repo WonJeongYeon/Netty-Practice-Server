@@ -55,14 +55,14 @@ public class AuthServerConfig {
 
     private AuthEncoder authEncoder;
 
-    private final AuthHandler authHandler;
+//    private final AuthHandler authHandler;
 
 
     @Bean @Qualifier("authBootStrap")
-    public ServerBootstrap informationBootStrap() {
+    public ServerBootstrap authBootStrap() {
 
         ServerBootstrap bootstrap = new ServerBootstrap();
-        bootstrap.group(infoBossGroup(), infoWorkerGroup())
+        bootstrap.group(authBossGroup(), authWorkerGroup())
                 .channel(NioServerSocketChannel.class)
                 .handler(new LoggingHandler(LogLevel.DEBUG))
                 .childHandler(new ChannelInitializer<SocketChannel>() {
@@ -80,18 +80,18 @@ public class AuthServerConfig {
     }
 
     @Bean
-    @Qualifier("infoBossCount")
-    public NioEventLoopGroup infoBossGroup(){
+    @Qualifier("authBossCount")
+    public NioEventLoopGroup authBossGroup(){
         return new NioEventLoopGroup(bossCount);
     }
 
-    @Bean @Qualifier("infoWorkerCount")
-    public NioEventLoopGroup infoWorkerGroup(){
+    @Bean @Qualifier("authWorkerCount")
+    public NioEventLoopGroup authWorkerGroup(){
         return new NioEventLoopGroup(workerCount);
     }
 
-    @Bean @Qualifier("infoInetSocketAddress")
-    public InetSocketAddress infoInetSocketAddress() {
+    @Bean @Qualifier("authInetSocketAddress")
+    public InetSocketAddress authInetSocketAddress() {
         return new InetSocketAddress(host, port);
     }
 
@@ -99,9 +99,9 @@ public class AuthServerConfig {
         authDecoder = new AuthDecoder();
         authEncoder = new AuthEncoder();
         pipeline.addLast(authDecoder);
-        pipeline.addLast(authEncoder);
+//        pipeline.addLast(authEncoder);
         pipeline.addLast(new ReadTimeoutHandler(readTimeOut));
-        pipeline.addLast(authHandler);
+//        pipeline.addLast(authHandler);
 
     }
 }
